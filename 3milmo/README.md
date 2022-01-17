@@ -1,2 +1,4 @@
-# 3milmo
-TTTT clade: "third millenium money" - self-attested fiat currency
+# TTTT:3milmo
+## third millenium money
+
+This protocol implements self-attested fiat currency over TTTT
