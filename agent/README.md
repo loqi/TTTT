@@ -1,6 +1,8 @@
-# TTTT - Transitive Trust Topology Tinker
-## Root protocol manages fundamental peer relationships
-## Each application extends the protocol suite with a clade module
+# TTTT agent (active peer node process)
+
+This is the process software that listens for and initiates TTTT directives. The basic TTTT functionality is to establish direct connections between two formerly distant nodes.
+
+The agent is the basic unit of automation in the TTT. There may be clients running on smartphones and servers running in the cloud, but ultimately that is a convenient fiction. Anything that happens on the TTT network is performed by agent peers.
 
 ### Glossary
 
