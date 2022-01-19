@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-import socket
+import myself
 
 class TmmDunbar(Dunbar):
-    iou = 0 # Balance in millikudos. Negative integer means I am owed.
+    iou = 0 # Integer balance in millikudos. Negative sign means I am owed; positive means I owe.
     iouForeign = {}
     booked = []
 
