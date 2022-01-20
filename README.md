@@ -1,4 +1,8 @@
-# TTTT - Transitive Trust Topology Tinker
+# TTTT - Transitive Trust Topology Tinker or "tabletop"
 ## Protocol suite for transitive-trust applications
 
-begin with /doc/START-TOUR to get the lay of the land.
+For the quickest understanding look at these files in this sequence:
+    doc/glossary        - the jargon dictionary
+    node/agent/tttt     - the root implementation of a TTTT agent
+    node/user/boss      - the client interface for instructing our TTTT agent to do things
+    node/agent/<clade>  - TTTT protocol extensions implementing app functionality
