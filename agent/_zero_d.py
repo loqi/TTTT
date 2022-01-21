@@ -1,23 +1,35 @@
 #!/usr/bin/env python3
 
-# The TTTT protocol operates entirely in IPv6. IPv4 addresses are reachable through a compatibility map in the IPv6
-# standard. An IPv4 address through IPv6 is at eighty 0-bits, sixteen 1-bits, and the thirty-two bits of IPv4 address.
-# It can even be represented in dot-decimal notation at the end of the IPv6 text address representation format.
-# So the IPv4 address "192.168.10.1" is reachable through the IPv6 address "::ffff:192.168.10.1"
+# This script starts the Agent Zero server daemon.
 
-# UDP is the primary transport layer protocol for TTTT messaging.
-# Standard messages must fit within a 1280 byte datagram.
+# Agent Zero (the first-person agent residing at our home node of the TTT graph) often speaks TTTT to
+# its dunbars (the agents at adjacent TTT nodes) and occasionally speaks to strangers (agents two or
+# more degrees distant). Agent Zero is controlled by a user via a client, which tpyically serves
+# just one or very few authorized users. This client process uses an API to instruct Agent Zero, which
+# in turn figures out how to carry out the client request via TTTT communications with other agents.
+
+# The TTTT protocol operates entirely in IPv6. IPv4 addresses are reachable through a compatibility
+# map in the IPv6 standard. An IPv4 address through IPv6 is at eighty 0-bits, sixteen 1-bits, and the
+# thirty-two bits of IPv4 address. It can even be represented in dot-decimal notation at the end of the
+# IPv6 text address representation format. So the IPv4 address "192.168.10.1" is reachable through the
+# IPv6 address "::ffff:192.168.10.1"
+
+# UDP is the transport layer protocol for TTTT messaging.
+# Standard messages may not exceed 1280 bytes in length.
 # Messages may occasionally be dropped. That is normal operation.
 # TTTT routes around trouble when nodes are sufficiently well connected.
 # Critical messages are explicitly acknowledged by agents.
 # Network congestion is to be explicitly adapted to by agents.
 
 # Remember:
-# 'TTT' is transitive trust topology - or 'tripod' - graph of trust. We only see the local part.
-# 'TTTT' is transitive trust topology tinker - or 'tabletop' - the protocol of TTT
+# 'TTT' is transitive trust topology - the graph of trust. An agent can only directly see its dunbars.
+# 'TTTT' is transitive trust topology tinker - ("tabletop protocol") the protocol of the TTT graph
 # 'node' is a locus on the TTT graph (a virtual place)
-# 'agent' is a software process that speaks TTTT (a daemon)
-# 'boss' is the interface allowing a user to control an agent
+# 'agent' is a software process that speaks TTTT (a daemon) on the TTT graph
+# 'Agent Zero' is the first-person agent residing at the local node
+# 'owner' is the person or similar entity who controls an agent
+# 'dunbar' is an agent at an adjacent TTT node, one where there's a little trust
+# 'stranger' is any TTT agent without sufficient trust to link directly as a dunbar
 
 import socket
 import daemon
