@@ -17,15 +17,17 @@
 # IPv6 address "::ffff:192.168.10.1"
 #
 # UDP is the transport layer protocol for TTTT messaging.
-# Standard messages may not exceed 1280 bytes in length.
+# A standard TTTT message must not exceed 1280 bytes in length.
 # Messages may occasionally be dropped. That is normal operation.
+# Any agent may become or overwhelmed, or forgetful, or shut down.
 # TTTT routes around trouble when nodes are sufficiently well connected.
-# Critical messages are explicitly acknowledged by agents.
-# Network congestion is to be explicitly adapted to by agents.
+# Critical messages are to be explicitly acknowledged by agents.
+# Network congestion or damage is to be explicitly adapted to by agents.
 #
 # Remember:
-# 'TTT' is transitive trust topology - the graph of trust. An agent can only directly see its dunbars.
-# 'TTTT' is transitive trust topology tinker - ("tabletop protocol") the protocol of the TTT graph
+# 'TTT' transitive trust topology is the graph of trust. An agent cannot directly see beyond its dunbars.
+# 'TTTT' transitive trust topology tinker (or "tabletop") is the protocol of the TTT graph
+# 'clade' extends TTTT with specific talents, i.e. 3milmo (credit money), ding (message ratings)
 # 'node' is a locus on the TTT graph (a virtual place)
 # 'agent' is a software process that speaks TTTT (a daemon) on the TTT graph
 # 'agent zero' is the first-person agent residing at the local node
@@ -78,6 +80,9 @@ class AgentZero(Agent):
         while True:
             datagram, addr = sock.recvfrom(1280)
             got_request(datagram)
+
+# Set up asynchronous serving of requests and scheduling of outgoing messages
+
 
     # def start(self):
     #     """Start the TTTT listener"""

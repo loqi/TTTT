@@ -1,5 +1,5 @@
 # TTTT root clade
 
-The base functionality of TTTT manages fundamental structure of the TTT primitive network, such as two agents engaging in a publc-key exchange, or two agents negotiating their new dunbar relationship.
+The base functionality of TTTT manages fundamental structure of the TTT graph, such as two agents engaging in a publc-key exchange, or two agents negotiating their new dunbar relationship.
 
 The real benefits of maintaining this infrastructure are realized by specific applications. In order for an agent to partake in an application, that agent must be extended with that application's clade module and then communicate with other similarly equipped agents. Once they can speak the same application's TTTT protocol extension, they can collaborate with each other and implement that application. For example, an agent speaking the root TTTT protocol knows nothing about how to implement a currency until it is extended with the TTTT.3milmo clade. From then on, the agent knows how to do business with any of its similarly extended dunbars.
