@@ -5,6 +5,5 @@
 import daemon
 import zero
 
-agent0 = AgentZero()
 with daemon.DaemonContext():
-    agent0.start()
+    AgentZero().start()
