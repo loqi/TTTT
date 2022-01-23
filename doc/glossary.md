@@ -12,6 +12,8 @@ clade module extending TTTT to support a messaging and heralding application ass
 
 **dunbar** -- An owner or an agent or a node connected to another in direct TTT link. From your perspective, you own a node with a collection of links with each of your dunbars. Your dunbar nodes should belong to owners personally known to you, to the extent that you are willing to trust them at least a little bit with an aspect of at least one TTTT application.
 
+**hub** -- A TTT node and all of its dunbars. A particular one-degree neighborhood of TTT.
+
 **link** -- A direct connection between a pair of dunbars on the TTT.
 
 **node** -- An individual vertex in the TTT graph. A node is not an agent, but is a topological location on the graph, while an agent is a software process responsible for interacting with other agents via protocol directives. (A node is a place. An agent is a bot. An owner is a person.)
