@@ -39,7 +39,6 @@
 # PIP modules:
 import ipaddress
 import socket
-import daemon
 # time
 # base64
 
@@ -107,15 +106,15 @@ class AgentZero(Agent):
 
     def start(self):
         """Start the first-person TTTT listener"""
-        with daemon.DaemonContext():
-            sock = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
-            sock.bind((self.ip6, self.port))
-            while True:
-                datagram, spoofable_addr = sock.recvfrom(1280) # recvfrom => (bytes, address)"
-                host = ipaddress.ip_network(spoofable_addr)
-                agent = dunbar_at_host[host] or stranger_at_host[host]
-                req = plain_from_hmac1280(datagram)
-                # Now req has a plainBytes 
+        sock = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
+        sock.bind((self.ip6, self.port))
+        while True:
+            datagram, spoofable_addr = sock.recvfrom(1280) # recvfrom => (bytes, address)"
+            host = ipaddress.ip_network(spoofable_addr)
+            agent = dunbar_at_host[host] or stranger_at_host[host]
+            req = plain_from_hmac1280(datagram)
+            # write req to queue in database
+
 
 
 # Set up asynchronous serving of requests and scheduling of outgoing messages

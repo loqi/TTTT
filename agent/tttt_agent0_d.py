@@ -3,7 +3,7 @@
 # This script starts the Agent Zero daemon.
 
 import daemon
-import zero
+import agent_zero
 
 with daemon.DaemonContext():
     AgentZero().start()
