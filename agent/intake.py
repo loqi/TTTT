@@ -8,12 +8,23 @@ class Intake:
     decrypting, sanity-checking, and then queueing that request if it passes all integrity filters. The sender
     may be a stranger using public-key encryption or a dunbar encrypted by dunbar tunnel."""
 
+    cryp = Cryp()
+    
+
+    tttt = Tttt()
+    
+    
+
+    # Go through each element in the queue and process them.
+    
+
+
     counter = 0
 
-    def got(self, datagram, spoofable_addr):
+    def got(self, hmac_datagram, spoofable_addr):
         host = ipaddress.ip_network(spoofable_addr)
         agent = dunbar_at_host[host] or stranger_at_host[host]
-        _queue_for_triage(plain_from_hmac1280(datagram))
+        _queue_for_triage(plain_from_hmac1280(hmac_datagram))
         return True
 
     def _queue_for_triage(plainBytes)

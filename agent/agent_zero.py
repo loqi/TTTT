@@ -109,10 +109,13 @@ class AgentZero(Agent):
         sock = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
         sock.bind((self.ip6, self.port))
         while True:
-            datagram, spoofable_addr = sock.recvfrom(1280) # recvfrom => (bytes, address)"
-            host = ipaddress.ip_network(spoofable_addr)
-            agent = dunbar_at_host[host] or stranger_at_host[host]
-            req = plain_from_hmac1280(datagram)
+            hmac_datagram, spoofable_addr = sock.recvfrom(1280) # recvfrom => (bytes, address)"
+            
+            # Queue this request into DB for intake.py to proccess
+            # Just use a text file for now
+
+            agent = dunbar__addr[spoofable_addr] or stranger__addr[spoofable_addr]
+            req = plain_from_hmac1280(hmac_datagram)
             # write req to queue in database
 
 
