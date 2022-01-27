@@ -2,6 +2,7 @@
 
 agent0
 boss
+wad
 
 **3milmo** -- "third millennium money" -- A clade module extending TTTT to support a currency application mediated by fungible IOUs. This is meant to give the power of fiat currency to everybody, not just the few. In this system, one does not earn money before spending it; one spends money before earning it. Yeah, it works better than it sounds.
 
@@ -31,6 +32,6 @@ boss
 
 **TTT** -- Transitive Trust Topology (aka "tripod") -- The **graph of peers** serving as the infrastructural primitive network
 
-**TTTT** -- Transitive Trust Topology Tinker (aka "tabletop") -- The **modular protocol** for establishing and maintaining the TTT network, plus the the collection of specializations underlying the various TTT applications.
+**TTTT** -- Transitive Trust Topology Traffic (aka "tabletop") -- The **modular protocol** for establishing and maintaining the TTT network, plus the the collection of specializations underlying the various TTT applications.
 
 **yarn code** -- A short string of characters used to associate asynchronous replies as part of an ongoing TTTT protocol back-and-forth algorithmic conversation.
