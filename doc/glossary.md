@@ -3,6 +3,8 @@
 agent0
 boss
 wad
+nib
+verb
 
 **3milmo** -- "third millennium money" -- A clade module extending TTTT to support a currency application mediated by fungible IOUs. This is meant to give the power of fiat currency to everybody, not just the few. In this system, one does not earn money before spending it; one spends money before earning it. Yeah, it works better than it sounds.
 

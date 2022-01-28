@@ -14,11 +14,6 @@
 # ECHO
 # AVOW
 
-# Initialize me as the TTTT user
-me = Boss()
-
-# B
-me.start()
 
 
 
