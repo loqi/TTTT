@@ -21,6 +21,23 @@ class Tttt:
         self.arg__parm = {}
         return self
 
+# "~^@$ PUSH to uR6vFL92 nav [ rir6W7eN GpY+Bzc6 LpR20sVu qQHz1w7P ] re DyfGOz5J @$ REMIT 12.280 fare 0.281 need 0.186"
+
+
+
+# TtttRequest object =
+#       { verb:  "PUSH"
+#       , sum:  12.280
+#       , of:   "kudos"
+#       , to:   "uR6vFL92"
+#       , from: "G7zR+Ftx"
+#       , fare: 0.281
+#       , need: 0.186
+#       , nav:  [ "rir6W7eN", "GpY+Bzc6", "LpR20sVu", "qQHz1w7P" ]
+#       }
+
+
+
     def wad__obj():
         ret = ""
         # Return wad ( ) from TtttRequest
