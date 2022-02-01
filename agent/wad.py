@@ -4,3 +4,4 @@
 # that queue will be evaluated and moved to a priority queue where tasks are scheduled for action in a priority queue.
 
 class Wad:
+    

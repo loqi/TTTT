@@ -1,14 +1,10 @@
 # Glossary
 
-agent0
-boss
-wad
-nib
-verb
-
 **3milmo** -- "third millennium money" -- A clade module extending TTTT to support a currency application mediated by fungible IOUs. This is meant to give the power of fiat currency to everybody, not just the few. In this system, one does not earn money before spending it; one spends money before earning it. Yeah, it works better than it sounds.
 
 **agent** -- The active peer process running (this software) on a TTT node. An agent is empowered to act autonomously in some capacities that require speed to perform or that are not worth the human attention of the owner of the node. Sometimes an agent defers a decision to its owner. (A node is a place. **An agent is a bot.** An owner is a person.)
+
+**Agent Zero** -- The agent at our local node (zero degrees of separation).
 
 **clade** -- Any branch of the family tree of the TTTT protocol and all its deeper specializations.
 
@@ -37,3 +33,9 @@ verb
 **TTTT** -- Transitive Trust Topology Traffic (aka "tabletop") -- The **modular protocol** for establishing and maintaining the TTT network, plus the the collection of specializations underlying the various TTT applications.
 
 **yarn code** -- A short string of characters used to associate asynchronous replies as part of an ongoing TTTT protocol back-and-forth algorithmic conversation.
+
+
+boss
+wad
+nib
+verb
