@@ -22,14 +22,6 @@ class Wadder:
         return plain
 
 # Wad formats:
-#   to/from a stranger:
-#        8 - format descriptor and arguments
-#               1 - version 00......
-#               1 - format  00..01..
-#       16 - cryptographic signature
-#       32 - sender's public key
-#       72 - data payload
-#       0..9*128 - extended payload
 #
 #   to/from a dunbar:
 #         2 - format descriptor
@@ -39,4 +31,13 @@ class Wadder:
 #        16 - HMAC
 #       104 - payload
 #       72  - data payload
-#       0..9*128 - extended payload
+#       (0..9)*128 - extended payload
+#
+#   to/from a stranger:
+#        8 - format descriptor and arguments
+#               1 - version 00......
+#               1 - format  00..01..
+#       16 - cryptographic signature
+#       32 - sender's public key
+#       72 - data payload
+#       (0..9)*128 - extended payload
