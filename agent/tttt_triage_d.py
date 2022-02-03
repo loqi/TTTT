@@ -4,9 +4,9 @@
 # that queue will be evaluated and moved to a priority queue where tasks are scheduled for action in a priority queue.
 
 class Intake:
-    """An assistant to AgentZero, that processes a TTTT request coming in from another agent by authenticating,
-    decrypting, sanity-checking, and then queueing that request if it passes all integrity filters. The sender
-    may be a stranger using public-key encryption or a dunbar encrypted by dunbar tunnel."""
+    # An assistant to AgentZero, that processes a TTTT request coming in from another agent by authenticating,
+    # decrypting, sanity-checking, and then queueing that request if it passes all integrity filters. The sender
+    # may be a stranger using public-key encryption or a dunbar encrypted by dunbar tunnel.
 
     cryp = Cryp()
     

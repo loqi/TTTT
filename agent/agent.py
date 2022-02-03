@@ -43,8 +43,7 @@ import socket
 # base64
 
 # Local modules:
-import protocol/api as tttt
-
+import tttt/_api as tttt
 
 class Agent:    # Any node of the TTT graph and the agent residing there: strangers, dunbars, and even AgentZero
     """A TTT network has an agent operating at every node. An agent talks TTTT with other agents."""
@@ -54,7 +53,6 @@ class Agent:    # Any node of the TTT graph and the agent residing there: strang
     port = 5150     # The UDP port this agent listen for TTTT
     pubk = ""       # General-purpose public key. Source material for gSid and guid values.
     name = ""       # Only unique within the scope of Agent Zero. That agent's familiar name around here.
-
 
 class Stranger(Agent):  # List of memorable non-dunbar nodes.
     """A stranger is an agent at least two degrees distant in the TTT graph."""
@@ -69,7 +67,7 @@ class Dunbar(Agent):    # My VIP list of TTT agents on adjacent nodes because th
     guid_str = base64(guid)
 
     # TODO: make these real
-    hmac1280_from_plain(self, plain):
+    hmac1280__plain(self, plain):
         """Return an encrypted and HMAC-tagged datagram length-padded to 1280 bytes"""
         # FAKE: Signify NUL character and long pseudorandom padding by appending ".**"
         ret = plain + ".**" # Pad datagram with NUL + random bytes to 1280 length
@@ -78,7 +76,7 @@ class Dunbar(Agent):    # My VIP list of TTT agents on adjacent nodes because th
         # FAKE: Signify 16-byte HMAC tag stepping on last 16 bytes by appending guid
         ret = ret + str(guid_str) # Append HMAC to end
         return ret
-    plain_from_hmac1280(self, hmac1280)
+    plain__hmac1280(self, hmac1280)
         """Perform authentication and dunbar-tunnel decryption of a 1280-length HMAC datagram"""
         # FAKE: Verify hmac was originated by this dunbar
         if hmac1280[-8:] != guid_str:
