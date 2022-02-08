@@ -23,20 +23,21 @@ class Wadder:
 
 # Wad formats:
 #
-#   to/from a stranger:
+#   to/from a xenode:
 #        8 - format descriptor and arguments
-#               1 - version 0001....
-#               1 - format  0000....
-#               6 - GIUD (must match public key)
-#       16 - signature by sender - demonstratos control of public key and reveals content tampering
+#               1 - version 0001.... - TTTT version 1
+#               1 - format  0000.... - means public key traffic
+#               6 - undefined bytes
+#        8 - signature by sender - demonstrates control of public key. Reveals real-time content tampering
 #       32 - sender's public key derives to gSid and guid - serves as both TTT address and encryption
-#       72 - message payload
-#       (0..9)*128 - extended payload
+#      208 - message payload encrypted in Curve25519 elliptic curve 256-bit public key (compressed, encrypted, padded)
+#       (0..8)*128 - extended payload
 #
 #   to/from a dunbar:
-#         2 - format descriptor
-#               1 - version 0001....
+#         8 - format descriptor
+#               1 - version 0001.... - TTTT version 1
 #               1 - format  0001.... - means dunbar tunnel traffic
-#         6 - GUID
-#       128 - message payload encrypted by dunbar tunnel symetric cypher
-#       (0..9)*128 - extended payload
+#               6 - GUID identifying dunbar node
+#         8 - 64-bit HMAC authenticating sender
+#       240 - message payload encrypted by dunbar tunnel AES symetric-key cypher
+#       (0..8)*128 - extended payload

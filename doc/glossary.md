@@ -32,11 +32,12 @@
 
 **TTTT** -- Transitive Trust Topology Traffic (aka "tabletop") -- The **modular protocol** for establishing and maintaining the TTT network, plus the the collection of specializations underlying the various TTT applications.
 
+**wad** -- A packet of binary TTTT message data packaged for transmission across an insecure channel. It will be a standardized format derived from a text command that is compressed, encrypted, padded to obfuscate the length and signed with HMAC. The intended recipient will then reverse that process.
+
 **yarn code** -- A short string of characters used to associate asynchronous replies as part of an ongoing TTTT protocol back-and-forth algorithmic conversation.
 
 
 boss
-wad
 nib
 verb
 xenode
