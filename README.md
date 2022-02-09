@@ -1,4 +1,4 @@
-# TTTT - Transitive Trust Topology Tinker or "tabletop"
+# TTTT - Transitive Trust Topology Traffic or "tabletop"
 ## Protocol suite for transitive-trust applications
 
 For the quickest understanding look at these files in this sequence:
