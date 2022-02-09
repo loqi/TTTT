@@ -6,6 +6,8 @@
 
 **Agent Zero** -- The agent at our local node (zero degrees of separation).
 
+**boss** -- A TTTT client or other process that controls an agent.
+
 **clade** -- Any branch of the family tree of the TTTT protocol and all its deeper specializations.
 
 **ding** -- A clade module extending TTTT to support a messaging and heralding application assigning reliable urgency ratings meaningful to the recipient. This is meant to rescue us from being human packet routers by quieting the arrival of most messages and emphasizing the few that really matter to us, the recipient.
@@ -36,8 +38,6 @@
 
 **yarn code** -- A short string of characters used to associate asynchronous replies as part of an ongoing TTTT protocol back-and-forth algorithmic conversation.
 
-
-boss
 nib
 verb
 xenode
