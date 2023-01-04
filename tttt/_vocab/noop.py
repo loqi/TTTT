@@ -1,7 +1,7 @@
 # tttt{PUSH
 #      cargo 3milmo{REMIT
 #                   purse frag{TOSS
-#                              prob 0.002
+#                              value 0.002
 #                              atom 500
 #                              }222
 #                   fare 30
@@ -12,6 +12,12 @@
 #      nav [...]
 #      weight 3
 #      }000
+
+
+
+# {tttt:PUSH cargo {3milmo:REMIT purse {frag:TOSS value 0.002 atom 500 }/-222
+#                                fare 30 need 12 }@$111
+#            from AAA to ZZZ nav [...] weight 3 }~^000
 
 
 

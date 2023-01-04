@@ -1,6 +1,9 @@
 # Various OS housekeeping files
 .DS_Store
 
+# A common name for a Python development virtual environment
+venv/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
