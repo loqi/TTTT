@@ -26,7 +26,7 @@
 #
 # Remember:
 # 'TTT' transitive trust topology is the graph of trust. An agent cannot directly see beyond its dunbars.
-# 'TTTT' transitive trust topology tinker (or "tabletop") is the protocol of the TTT graph
+# 'TTTT' transitive trust topology tunneler (or "tabletop") is the protocol of the TTT graph
 # 'clade' extends TTTT with specific talents, i.e. 3milmo (credit money), ding (message ratings)
 # 'node' is a locus on the TTT graph (a virtual place)
 # 'agent' is a software process that speaks TTTT (a daemon) on the TTT graph
