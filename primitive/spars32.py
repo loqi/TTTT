@@ -2,18 +2,22 @@
 # spars32 - A binary integer format using a 32-bit signed integer to represent
 # a 64-bit signed floating-magnitude integer. This format provides eight decimal
 # digits of precision, and a magnitude range spanning a signed 64-bit integer.
+# For "small values", more than eight significant digits may be represented.
+# Up to a billion (positive or negative) is represented by spars32 with exact
+# precision. Up to ten billion (positive or negative) is represented in increments
+# of 25. 100G or more is represented with eight significant decimal digits.
 #
-# It is intended to compress a 64-bit integer into a 32-bit integer by sacrificing
-# precision for range. It is designed to exceed human-scale range and precision
-# needs. All possible 32-bit integers unambigueusly and efficiently map to one signed
-# 64-bit two's-compliment integer value. Arithmetic may not be performed directly on
-# a spars32 integer, and must instead be done on its 64-bit expansion. Signed integer
-# compare functions performed directly between spars32 values always produce correct
-# results.
+# Spars32 is compresses a 64-bit integer to a 32-bit integer by sacrificing precision
+# for range. It is meant to exceed human-scale range and precision needs. All possible
+# 32-bit integers unambigueusly and efficiently map to one signed 64-bit two's-
+# compliment integer value. Arithmetic may not be performed directly on a spars32
+# integer, and must instead be done on its 64-bit expansion, or must be done using
+# format-aware functions. Signed integer comparison may be performed directly between
+# spars32 values, and always produce correct relative results.
 #
 # Spars32 values in the -1G to +1G range represent their exact integer value, i.e.
 # for values in this range, we have nine significant decimal digits. Values in the
-# 1,000,000,000..1,360,000,000 (positive or negative) provide 8.25 significant digits
+# 1,000,000,000..1,360,000,000 (positive or negative) provide 8.4 significant digits
 # in the 64-bit expansion -- that is, a spars32 integer can represent 64-bit integers
 # 1234567800, 1234567825, 1234567850, 1234567875, and so on. Values in the range
 # 1360M..1450M (positive or negative) provide 8 significant digits and an resolution
@@ -29,10 +33,26 @@
 # integer value +7,748,364,700,000.000,000. Any 64-bit value outside this range has
 # no spars32 equivalent.
 
+# A major use case for spars32 is to represent exact monetary values. For most
+# purposes, eight significant digits is more than neccessary, but floating-point
+# arithmetic can be treacherous. In third millennium money, the microkudos (mж)
+# is the standard minimum transferable denomination. One millionth of one kudos
+# would be represented by an integer 1, and any amount of kudos would be represented
+# by an integer number of mж. There are very few cases where someone would want
+# to transfer a large sum of money while also caring about the lowest-order
+# digits beyond eight significant digits. Consequently, a 32 bit integer will
+# be adequate for pretty much all circumstances faced by 3milmo applications. In
+# the rare case where it is unsuitable, two separate transactions can be paired
+# to provide the full 64-bit resolution needed. (This never actually happens.)
+# The table below gives selected spars32 values and the 64-bit signed integer
+# value represented by it. The 64-bit values are divided by a million, to to
+# demonstrate the monetary value in kidos of the integer representing a mж sum.
+# That is, one of the commas is shown as a decimal point for the 3milmo context.
+#
 # Samples of integers represented as spars32 bit fields and decimal equivalets:
 #
-#    32-bit value  |                 64-bit value   | if v32 < 1000M  (increment 1)
-#              -1  |                   -0.000,001
+#   spars32 value  |         64-bit integer value   | if v32 < 1000M  (increment 1)
+#              -1  |                   -0.000,001   |
 #               0  |                    0.000,000   |    v64 = v32
 #               1  |                    0.000,001   |
 #     999,999,999  |                  999.999,999   |
@@ -68,8 +88,8 @@
 #   2,080,000,000  |    1,000,000,000,000.000,000   | if v32 < (increment 100G)
 #   2,080,000,001  |    1,000,000,100,000.000,000   |    v64 = (v32 - 2080M) * 100G + 10^18
 #   2,147,483,646  |    7,748,364,600,000.000,000   | 
-#   2,147,483,647  |    7,748,364,700,000.000,000   | (limiting positive value)
-#  -2,147,483,648  |   -7,748,364,800,000.000,000   | (limiting negative value)
+#   2,147,483,647  |    7,748,364,700,000.000,000   | (maximum positive value)
+#  -2,147,483,648  |   -7,748,364,800,000.000,000   | (minimum negative value)
 
 def spars32_from_int64(v64)
     if v64 > -1_000_000_000
