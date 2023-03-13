@@ -27,8 +27,7 @@ class Tttt:
 
 # TtttRequest object =
 #       { verb:  "PUSH"
-#       , sum:  12.280
-#       , of:   "kudos"
+#       , sum:  12280
 #       , to:   "uR6vFL92"
 #       , from: "G7zR+Ftx"
 #       , fare: 0.281
