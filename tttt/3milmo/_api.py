@@ -8,7 +8,7 @@ class TmmDunbar(Dunbar):
     booked = []
 
 class Tmm:
-    """A 3milmo agent knows how to mediate money with another 3milmo agent.
+    """A 3milmo agent knows how to mediate money with another 3milmo agent."""
 
     udp_port = 5150
     ip6_here = "0000:0000:0000:0000:0000:0000:0000:0000" # localhost "::1"
