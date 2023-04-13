@@ -39,6 +39,25 @@
 **yarn code** -- A short string of characters used to associate asynchronous replies as part of an ongoing TTTT protocol back-and-forth algorithmic conversation.
 
 nib
-verb
 xenode
-trail
+ambit
+way, chain, path, lane. trail
+len, vim, lag, verb, adverb, clause
+nib
+
+jot -- An individual priority-coded task request waiting to be serviced by the triage process
+
+
+Here is some useful terminology:
+
+' TTT' transitive trust topology is the graph of trust. An agent cannot directly see beyond its dunbars.
+'TTTT' transitive trust topology tunneler (or "tabletop") is the protocol of the TTT graph
+'clade' extends TTTT with specific talents, i.e. 3milmo (credit money), ding (message heraldry)
+'node' is a locus on the TTT graph (a virtual place)
+'agent' is a software process that speaks TTTT (a daemon) on the TTT graph
+'agent zero' is the first-person agent residing at the local node
+'owner' is the person or similar entity who controls an agent
+'dunbar' is an agent at an adjacent TTT node, one where there's a little trust
+'xenode' is any TTT agent without sufficient trust to link directly as a dunbar
+
+See doc/glossary for a more complete jargon reference.

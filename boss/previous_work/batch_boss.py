@@ -7,7 +7,7 @@
 
 # TODO: Make a real API and user-interface client that lets our TTTT agent's human ask it to do things.
 
-import ../agent/zero
+import .../agent/zero
 
 agent0 = AgentZero()
 agent0.start()
