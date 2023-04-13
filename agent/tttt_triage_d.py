@@ -1,33 +1,5 @@
-# When any TTTT request arrives to Agent0, that encrypted message is delegated to this module.
-
-# Here, it gets authenticated, then decrypted, then queued for later action. At some near future time, entries in
-# that queue will be evaluated and moved to a priority queue where tasks are scheduled for action in a priority queue.
-
-class Intake:
-    # An assistant to AgentZero, that processes a TTTT request coming in from another agent by authenticating,
-    # decrypting, sanity-checking, and then queueing that request if it passes all integrity filters. The sender
-    # may be a stranger using public-key encryption or a dunbar encrypted by dunbar tunnel.
-
-    cryp = Cryp()
-    
-
-    tttt = Tttt()
-    
-    
-
-    # Go through each element in the queue and process them.
-    
-
-
-    counter = 0
-
-    def got(self, hmac_datagram, spoofable_addr):
-        host = ipaddress.ip_network(spoofable_addr)
-        agent = dunbar_at_host[host] or stranger_at_host[host]
-        _queue_for_triage(plain_from_hmac1280(hmac_datagram))
-        return True
-
-    def _queue_for_triage(plainBytes)
-        filename = f"{self.queue_index:06}.request"
-        self.queue_index++
-        # Create new file f'{queue_index:06}.request' and then output plainBytes
+# 0. Listen at localhost+UDP socket for triage datagram.
+# 1. Convert all jots in arrive.db into triage.db pending tasks.
+# 2. Execute all priority tasks, converting outgoing to depart.db.
+# 3. If any task has ripened, notify tttt_depart_d via UDP socket.
+# 4. Loop back to listening.
