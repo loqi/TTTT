@@ -33,8 +33,8 @@
 #       000000_000000_000   = 0000_0000_0000_0000_0000
 #       AXr9H7_5TWmyP       = 467f_3db0_24f2_f973
 #       001001              = 0001_0001
-#       yrGyrG_yrG          = ffff_ffff_ffff
-#       yrH                 = invalid numeral: overflows as 0x1_0000
+#       tyKtyK_tyK          = ffff_ffff_ffff
+#       tyL                 = invalid numeral: overflows as 0x1_0000
 #       yyy                 = invalid numeral: overflows as 0x1_0d38
 
 def scrib41_from_int64(int64)
