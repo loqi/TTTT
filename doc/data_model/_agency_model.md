@@ -7,57 +7,82 @@ more than one user's interests on the TTTT network. Either word is technically a
 describe TTTT network peer-server software at any scale, but if we want to emphasize that
 a particular network agent provides service on behalf of a number of humans, we say agency.
 
-## Graph data model maintained by an agency to model the greater TTTT network topology
+## Graph data maintained by an agency to model the greater TTTT network topology
 
-The agency maintains a simplified model of the global TTTT graph with three flavors of
-node: endod, exod, xenod
+An agency maintains a simplified model of the global TTTT graph with three flavors of
+node:
 
-* An endod (endo-node) is a node formally represented by this agency.
-* An exod is a foreign node with a direct TTTT link to an endod
-* A xenod is a foreign node without direct TTTT link to an endod
+* An **endod** (endo-node) is a node formally represented by this agency.
+* An **exod** (exo-node) is a foreign node with a direct TTTT link to an endod
+* A **xenod** (xeno-node) is a foreign node without direct TTTT link to an endod
 
-The agency is responsible for being the source of truth on the endods and all endod-endod
-and endod-exod relationships. Exod-exod and Exod-Xenod relationships are modeled in the
-graph for efficient lane discovery, but in radically simplified form. For instance, there
-are countless lanes in existence in the real TTTT network between any pair of xenodes, but
-this is knowledge is never needed for the duties performed by this agency, so such links
-are not represented in the local simplified graph database. Although all TTTT links in the
-real topology are always two-way in the underlying protocol, this agency only has outbound
-exod-xenod links in its internal representation of the topology because it is never called
-upon to find a lane originating at, or passing through a xenod. The only place a xenod can
-appear in a lane of this agency would be at the terminis.
+Any agency is responsible for keeping the "source of truth" of all endods it serves, of
+all dunbar relationships between its endods and one another, and of all dunbar relationships
+between its endods and exods (nodes managed by foreign agents that are dunbars of nodes
+managed by this agent). Exod-exod and exod-xenod relationships are modeled in the local graph
+database for efficient lane discovery, but in radically simplified form. For instance, there
+are countless lanes in existence in the global TTTT network between any pair of xenodes, but
+this knowledge is never needed for the duties performed by this agency, so such links are not
+represented in the local graph database. Although real TTTT links in the global topology are
+always two-way in the underlying protocol, this agency only records outbound exod-xenod links
+in its internal representation of that topology because it is never called upon to find a
+lane originating at, or passing through a xenod. The only place a xenod can appear in a lane
+needed by this agency would be at the terminis.
 
-Using a graph-oriented DBMS, the agency models its own inner topology and tries to remember
-an inferred, mostly accurate, simplified model of the relevant parts of the outer global
-transitive trust topology. It authoritatively knows about its own endods and their links to
-both exods (dunbars of endods that are not themselves managed by this agency), and to other
-endods (links managed here). Entirely intramural TTTT traffic takes place directly in the
-agency database along :DB links. Border traffic (endod-exod and exod-endod) is mediated by
-actual TTTT wad over IP6 datagram. Traffic between node pairs without at least one endod is
-entirely out of the view of this agency and is simply assumed to eventually take place or be
-lost within a reasonable waiting time.
+Using a graph-oriented DBMS, the agency models its own fully up-to-date inner topology and
+tries to remember an inferred, mostly accurate, simplified model of the relevant parts of the
+global transitive trust topology. It authoritatively knows about its own endods and their links
+to all their dunbars regardless of whether those dunbars are local or foreign to this agency.
+Entirely intramural TTTT traffic takes place directly in the agency database along :DB links.
+Border traffic (endod-exod and exod-endod) is mediated by actual TTTT jots over IP6 datagram.
+Traffic between node pairs without at least one endod is entirely out of the view of this agency
+and is assumed to eventually take place or be lost within a reasonable time interval.
 
-These relationships are modeled by three flavors of link:
+The TTTT base relationships are modeled by three flavors of link at each intimacy distance:
 * `:DB` (intramural) links are extremely low friction. Traffic is mediated within the database.
 * `:TTTT` (border) links are mediated by actual TTTT traffic over IP datagrams.
 * `:DARK` links are inferred to exist entirely out of view, as lanes of unknown length.
 
-Usually, the lowest-cost lane from an enode to another enode is entirely intramural. However
-sometimes there exists a better path that crosses the border. The basic strategy is to query
-the agency graph database for the best intramural solution and then occasionally try a promising
-looking or randomly selected cross-border foray to keep the agency's endods competing with exods.
+So link label `:DB` represents a TTTT dunbar link between two endods which can do its business
+entirely within the graph database without need of generating IP datagrams. A link label `:TTTT`
+represents a dunbar link between a foreign and domestic node, thus requiring IP datagrams or similar
+means of cross-border communication with the foreign node's agent. A link label `:DARK` represents
+a TTTT dunbar link or multi-hop lane with any number of intermediary nodes that somehow connects those
+two foreign nodes.
+
+Supra-TTTT application protocols use links labeled as their own app identifier regardless of intimacy
+distance. Relationship identifiers such as `:DING` (message heraldry) `:M3M` (3milmo, or third millennium
+money) and `:GAB` (codified gossip) appear at all intimacy distances: endod-endod (`:DB` at the base
+level, endod-exod (`:TTTT` at base level), exod-exod (`:DARK`), or exod-xenod (`:DARK`) pairings. These
+classes of node pairing each carry a different set of attributes appropriate to the role of an intramural,
+border, or dark link. It is the responsibility of the query author to keep in mind which variant of link
+exists at each intimacy distance. The database uses distinct variants of relationship label at the TTTT
+(base) level as a documentation aid for us humans. When formulating a graph query for a generic TTTT lane,
+we emphasize these three distinct intimacy distances with technically unneccessary, but cognitively useful
+distinct relationship labels. For supra-TTTT application layers we dispense with distance-emphasizing link
+labels and instead rely on our understanding that, for example, an exod-exod link is always dark, and an
+endod-exod link is always crosses the border. Remember, each intimacy distance has a different set of state
+attributes appropriate to that distance, despite having the same relationship label for protocols above the
+TTTT level.
+
+The optimal continuity lane from an enode to another enode is usually intramural, and can be rapidly queried.
+However sometimes there exists a better lane that crosses the border. The basic strategy is for the agent to
+query the graph database for a probably-optimal intramural solution and then occasionally try a promising
+looking or even a randomly selected cross-border attempt to keep the agency's endods in meaningful competition
+with exods. Each time a border-crossing lane is discovered to outperform an intramural lane, this is valuable
+knowledge to be recorded for future performance gains.
 
 The following invariants must be satisfied by the agency's simplified graph model of the TTTT network:
 * An endod may be fully orphaned. Such a node cannot participate in dunbar operations of any kind.
 * An endod may link another endod. This allows direct database operations without network friction.
 * An endod may link an exod, representing a cross-border link needing dunbar wads over IP6 datagrams.
 * An endod may **not** link a xenod. Such a link indicates that xenod is a miscategorized exod.
-* An endod may only have two-way links, and each such link must me with an exod or another endod.
-* An exod always links at least one endod, otherwise that exod is a miscategorized xenod.
+* An endod must only have two-way links. Each such link must be with an exod or another endod.
+* An exod must always link at least one endod, otherwise that exod is a miscategorized xenod.
 * An exod may link another exod. This implies a lane (compound path) has been inferred at least once.
 * An exod may link **to** any number of xenods. We often need to discover a lane terminating at a xenod.
 * An exod may **not** link **from** a xenod. We never need a lane with a xenod anywhere but the end.
-* A xenod may **not** link another xenod. Any such path must be streamlined as xenod one hop **from** exod.
+* A xenod may **not** link another xenod. Any such link must be streamlined as xenod one hop **from** exod.
 
 ## Tabular data model
 
@@ -249,8 +274,8 @@ CREATE  ( endo_a:Endod { pubkey :"AAA45678901234567890123456789012"
     , (endo_d) -[:DB]-> (endo_e) -[:DB]-> (endo_d)
     , (endo_e) -[:DB]-> (endo_f) -[:DB]-> (endo_e)
     , (endo_f) -[:DB]-> (endo_a) -[:DB]-> (endo_f)
-    , (endo_c) -[:DB]-> (endo_h) -[:DB]-> (endo_c)
-    , (endo_h) -[:DB]-> (endo_g) -[:DB]-> (endo_h)
+    , (endo_c) -[:DB]-> (endo_g) -[:DB]-> (endo_c)
+    , (endo_g) -[:DB]-> (endo_h) -[:DB]-> (endo_g)
 
     , (exo_j) -[:TTTT{cap:10,net:0}]-> (endo_a) -[:TTTT{cap:10,net:0}]-> (exo_j)
     , (exo_k) -[:TTTT{cap:10,net:0}]-> (endo_a) -[:TTTT{cap:10,net:0}]-> (exo_k)
