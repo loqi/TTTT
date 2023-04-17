@@ -9,33 +9,54 @@ a particular network agent provides service on behalf of a number of humans, we 
 
 ## Graph data model maintained by an agency to model the greater TTTT network topology
 
-Three flavors of node: endod, exod, xenod
+The agency maintains a simplified model of the global TTTT graph with three flavors of
+node: endod, exod, xenod
+
 * An endod (endo-node) is a node formally represented by this agency.
 * An exod is a foreign node with a direct TTTT link to an endod
 * A xenod is a foreign node without direct TTTT link to an endod
 
-Using a graph-oriented DBMS (Neo4j) the agency tries to remember and update the inferred
-topology. It directly knows about its own endods, and it directly knows about its border
-links to exods (dunbars of endods that are not themselves managed by this agency). Entirely
-intramural TTTT traffic takes place directly in the agency database with no need for wads to
-be sent via IP6 datagram. Only traffic that crosses the border of the agency needs to be
-mediated by an IP6 dunbar wad between an endod and an exod.
+The agency is responsible for being the source of truth on the endods and all endod-endod
+and endod-exod relationships. Exod-exod and Exod-Xenod relationships are modeled in the
+graph for efficient lane discovery, but in radically simplified form. For instance, there
+are countless lanes in existence in the real TTTT network between any pair of xenodes, but
+this is knowledge is never needed for the duties performed by this agency, so such links
+are not represented in the local simplified graph database. Although all TTTT links in the
+real topology are always two-way in the underlying protocol, this agency only has outbound
+exod-xenod links in its internal representation of the topology because it is never called
+upon to find a lane originating at, or passing through a xenod. The only place a xenod can
+appear in a lane of this agency would be at the terminis.
+
+Using a graph-oriented DBMS, the agency models its own inner topology and tries to remember
+an inferred, mostly accurate, simplified model of the relevant parts of the outer global
+transitive trust topology. It authoritatively knows about its own endods and their links to
+both exods (dunbars of endods that are not themselves managed by this agency), and to other
+endods (links managed here). Entirely intramural TTTT traffic takes place directly in the
+agency database along :DB links. Border traffic (endod-exod and exod-endod) is mediated by
+actual TTTT wad over IP6 datagram. Traffic between node pairs without at least one endod is
+entirely out of the view of this agency and is simply assumed to eventually take place or be
+lost within a reasonable waiting time.
+
+These relationships are modeled by three flavors of link:
+* `:DB` (intramural) links are extremely low friction. Traffic is mediated within the database.
+* `:TTTT` (border) links are mediated by actual TTTT traffic over IP datagrams.
+* `:DARK` links are inferred to exist entirely out of view, as lanes of unknown length.
 
 Usually, the lowest-cost lane from an enode to another enode is entirely intramural. However
 sometimes there exists a better path that crosses the border. The basic strategy is to query
-the agency graph database for the best intramural solution and then occasionally try a cross-
-border foray to keep the agency's endods competing with our exods.
+the agency graph database for the best intramural solution and then occasionally try a promising
+looking or randomly selected cross-border foray to keep the agency's endods competing with exods.
 
-The following invariants must be satisfied by the agency graph modeling a global TTTT network:
+The following invariants must be satisfied by the agency's simplified graph model of the TTTT network:
 * An endod may be fully orphaned. Such a node cannot participate in dunbar operations of any kind.
 * An endod may link another endod. This allows direct database operations without network friction.
 * An endod may link an exod, representing a cross-border link needing dunbar wads over IP6 datagrams.
 * An endod may **not** link a xenod. Such a link indicates that xenod is a miscategorized exod.
-* Every link between an endod to an exod or another endod must be a paired (bi-directional) link.
+* An endod may only have two-way links, and each such link must me with an exod or another endod.
 * An exod always links at least one endod, otherwise that exod is a miscategorized xenod.
-* An exod may link an exod. This implies a lane (compound path) has been inferred at least once.
+* An exod may link another exod. This implies a lane (compound path) has been inferred at least once.
 * An exod may link **to** any number of xenods. We often need to discover a lane terminating at a xenod.
-* An exod may **not** LINK **from** a xenod. We never need to find a xenod at start or midpoint of a lane.
+* An exod may **not** link **from** a xenod. We never need a lane with a xenod anywhere but the end.
 * A xenod may **not** link another xenod. Any such path must be streamlined as xenod one hop **from** exod.
 
 ## Tabular data model
@@ -222,14 +243,14 @@ CREATE  ( endo_a:Endod { pubkey :"AAA45678901234567890123456789012"
 
     // There is no limit to endod-to-endod intramural communications at the base TTTT layer.
     // It all happens directly in the database, and requires no IP6 datagram traffic.
-    , (endo_a) -[:T]-> (endo_b) -[:T]-> (endo_a)
-    , (endo_b) -[:T]-> (endo_c) -[:T]-> (endo_b)
-    , (endo_c) -[:T]-> (endo_d) -[:T]-> (endo_c)
-    , (endo_d) -[:T]-> (endo_e) -[:T]-> (endo_d)
-    , (endo_e) -[:T]-> (endo_f) -[:T]-> (endo_e)
-    , (endo_f) -[:T]-> (endo_a) -[:T]-> (endo_f)
-    , (endo_c) -[:T]-> (endo_h) -[:T]-> (endo_c)
-    , (endo_h) -[:T]-> (endo_g) -[:T]-> (endo_h)
+    , (endo_a) -[:DB]-> (endo_b) -[:DB]-> (endo_a)
+    , (endo_b) -[:DB]-> (endo_c) -[:DB]-> (endo_b)
+    , (endo_c) -[:DB]-> (endo_d) -[:DB]-> (endo_c)
+    , (endo_d) -[:DB]-> (endo_e) -[:DB]-> (endo_d)
+    , (endo_e) -[:DB]-> (endo_f) -[:DB]-> (endo_e)
+    , (endo_f) -[:DB]-> (endo_a) -[:DB]-> (endo_f)
+    , (endo_c) -[:DB]-> (endo_h) -[:DB]-> (endo_c)
+    , (endo_h) -[:DB]-> (endo_g) -[:DB]-> (endo_h)
 
     , (exo_j) -[:TTTT{cap:10,net:0}]-> (endo_a) -[:TTTT{cap:10,net:0}]-> (exo_j)
     , (exo_k) -[:TTTT{cap:10,net:0}]-> (endo_a) -[:TTTT{cap:10,net:0}]-> (exo_k)
@@ -244,23 +265,23 @@ CREATE  ( endo_a:Endod { pubkey :"AAA45678901234567890123456789012"
     , (exo_q) -[:TTTT{cap:10,net:0}]-> (endo_d) -[:TTTT{cap:10,net:0}]-> (exo_q)
     , (exo_r) -[:TTTT{cap:10,net:0}]-> (endo_e) -[:TTTT{cap:10,net:0}]-> (exo_r)
 
-    , (exo_j) -[:X_TTTT{rank:100}]-> (exo_k) -[:X_TTTT{rank:130}]-> (exo_j)
-    , (exo_k) -[:X_TTTT{rank:200}]-> (exo_m) -[:X_TTTT{rank:230}]-> (exo_k)
-    , (exo_m) -[:X_TTTT{rank:300}]-> (exo_n) -[:X_TTTT{rank:330}]-> (exo_m)
-    , (exo_n) -[:X_TTTT{rank:400}]-> (exo_p) -[:X_TTTT{rank:430}]-> (exo_n)
-    , (exo_q) -[:X_TTTT{rank:600}]-> (exo_r) -[:X_TTTT{rank:630}]-> (exo_q)
-    , (exo_r) -[:X_TTTT{rank:700}]-> (exo_j) -[:X_TTTT{rank:730}]-> (exo_r)
+    , (exo_j) -[:DARK{rank:100}]-> (exo_k) -[:DARK{rank:130}]-> (exo_j)
+    , (exo_k) -[:DARK{rank:200}]-> (exo_m) -[:DARK{rank:230}]-> (exo_k)
+    , (exo_m) -[:DARK{rank:300}]-> (exo_n) -[:DARK{rank:330}]-> (exo_m)
+    , (exo_n) -[:DARK{rank:400}]-> (exo_p) -[:DARK{rank:430}]-> (exo_n)
+    , (exo_q) -[:DARK{rank:600}]-> (exo_r) -[:DARK{rank:630}]-> (exo_q)
+    , (exo_r) -[:DARK{rank:700}]-> (exo_j) -[:DARK{rank:730}]-> (exo_r)
 
-    , (exo_j) -[:X_TTTT{rank:2000}]-> (xeno_t)
-    , (exo_k) -[:X_TTTT{rank:3000}]-> (xeno_t)
-    , (exo_k) -[:X_TTTT{rank:4000}]-> (xeno_v)
-    , (exo_m) -[:X_TTTT{rank:5000}]-> (xeno_v)
-    , (exo_m) -[:X_TTTT{rank:6000}]-> (xeno_w)
-    , (exo_p) -[:X_TTTT{rank:7000}]-> (xeno_w)
-    , (exo_n) -[:X_TTTT{rank:8000}]-> (xeno_x)
-    , (exo_q) -[:X_TTTT{rank:9000}]-> (xeno_x)
-    , (exo_r) -[:X_TTTT{rank:1500}]-> (xeno_y)
-    , (exo_r) -[:X_TTTT{rank:2500}]-> (xeno_t)
+    , (exo_j) -[:DARK{rank:2000}]-> (xeno_t)
+    , (exo_k) -[:DARK{rank:3000}]-> (xeno_t)
+    , (exo_k) -[:DARK{rank:4000}]-> (xeno_v)
+    , (exo_m) -[:DARK{rank:5000}]-> (xeno_v)
+    , (exo_m) -[:DARK{rank:6000}]-> (xeno_w)
+    , (exo_p) -[:DARK{rank:7000}]-> (xeno_w)
+    , (exo_n) -[:DARK{rank:8000}]-> (xeno_x)
+    , (exo_q) -[:DARK{rank:9000}]-> (xeno_x)
+    , (exo_r) -[:DARK{rank:1500}]-> (xeno_y)
+    , (exo_r) -[:DARK{rank:2500}]-> (xeno_t)
 
 
     // , (exo_m) -[:X_TTTT{score:312}]-> (xeno_t) -[:X_TTTT{score:220}]-> (exo_m)
