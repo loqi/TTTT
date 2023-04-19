@@ -1,16 +1,25 @@
-# What is an agency or an agent?
+# TTTT server software
 
-The distinction between an agent and an agency is fairly arbitrary. They are technically
-equivalent concepts: a software peer-server representing the interests of one or more users
-who control their node(s) via a boss client interface. An agency is just an agent representing
-more than one user's interests on the TTTT network. Either word is technically accurate to
-describe TTTT network peer-server software at any scale, but if we want to emphasize that
-a particular network agent provides service on behalf of a number of humans, we say agency.
+An 'agent' is a piece of TTTT software for propagating TTTT traffic with other agents.
+Agents typically run autonomously and make automated algorithmic choices, setting aside
+higer-stakes choices to involve human intervention.
 
-## Graph data maintained by an agency to model the greater TTTT network topology
+Agents are configured to algorithmically carry out user desires without direct user
+intervention. Users periodically modify agent configuration as user desires change,
+allowing agents to run autonomously and continuously, while users only need get involved
+when a high-stakes decision is worth the delay of deffering to human judgement.
 
-An agency maintains a simplified model of the global TTTT graph with three flavors of
-node:
+### 'Agent' or 'Agency?'
+
+Either word refers to the same concept: TTTT peer-server software carrying out autonomous
+operations of one or more nodes on behalf of one or more human users. When an agent represents
+the nodes of many users, the word 'agency' emphasizes the point of this larger scale. The two
+words are otherwise interchangeable. In this code and documentation, the slightly shorter and
+more general form 'agent' is preferred when not making a point about many users.
+
+## Graph data maintained by an agent to model the greater TTTT network topology
+
+An agency maintains a simplified model of the global TTTT graph with three flavors of node:
 
 * An **endod** (endo-node) is a node formally represented by this agency.
 * An **exod** (exo-node) is a foreign node with a direct TTTT link to an endod
@@ -19,32 +28,33 @@ node:
 Any agency is responsible for keeping the "source of truth" of all endods it serves, of
 all dunbar relationships between its endods and one another, and of all dunbar relationships
 between its endods and exods (nodes managed by foreign agents that are dunbars of nodes
-managed by this agent). Exod-exod and exod-xenod relationships are modeled in the local graph
+managed by this agency). Exod-exod and exod-xenod relationships are modeled in the local graph
 database for efficient lane discovery, but in radically simplified form. For instance, there
 are countless lanes in existence in the global TTTT network between any pair of xenodes, but
 this knowledge is never needed for the duties performed by this agency, so such links are not
 represented in the local graph database. Although real TTTT links in the global topology are
 always two-way in the underlying protocol, this agency only records outbound exod-xenod links
-in its internal representation of that topology because it is never called upon to find a
-lane originating at, or passing through a xenod. The only place a xenod can appear in a lane
-needed by this agency would be at the terminis.
+in its representation of that topology because it is never called upon to find a lane originating
+at, or passing through a xenod. The only place a xenod can appear in a lane needed by this agency
+would be at the terminis.
 
 Using a graph-oriented DBMS, the agency models its own fully up-to-date inner topology and
 tries to remember an inferred, mostly accurate, simplified model of the relevant parts of the
 global transitive trust topology. It authoritatively knows about its own endods and their links
 to all their dunbars regardless of whether those dunbars are local or foreign to this agency.
 Entirely intramural TTTT traffic takes place directly in the agency database along :DB links.
-Border traffic (endod-exod and exod-endod) is mediated by actual TTTT jots over IP6 datagram.
-Traffic between node pairs without at least one endod is entirely out of the view of this agency
-and is assumed to eventually take place or be lost within a reasonable time interval.
+Border traffic (outbound endod-exod or inbound exod-endod) is mediated by actual TTTT jots over
+IP6 datagram. Traffic between node pairs without at least one endod takes place entirely out of
+the view of this agency and is assumed to eventually be carried out or somehow lost within a
+reasonable time interval.
 
 The TTTT base relationships are modeled by three flavors of link at each intimacy distance:
-* `:DB` (intramural) links are extremely low friction. Traffic is mediated within the database.
-* `:TTTT` (border) links are mediated by actual TTTT traffic over IP datagrams.
-* `:DARK` links are inferred to exist entirely out of view, as lanes of unknown length.
+* `:DB` (intramural) links are fast an inexpensive. Traffic is mediated within the database.
+* `:IP6` (border) links are mediated by actual TTTT traffic over IP datagrams to or from this agency.
+* `:DARK` links are inferred to exist beyand the visibility horizon, as lanes of unknown length.
 
 So link label `:DB` represents a TTTT dunbar link between two endods which can do its business
-entirely within the graph database without need of generating IP datagrams. A link label `:TTTT`
+entirely within the graph database without need of generating IP datagrams. A link label `:IP6`
 represents a dunbar link between a foreign and domestic node, thus requiring IP datagrams or similar
 means of cross-border communication with the foreign node's agent. A link label `:DARK` represents
 a TTTT dunbar link or multi-hop lane with any number of intermediary nodes that somehow connects those
@@ -53,7 +63,7 @@ two foreign nodes.
 Supra-TTTT application protocols use links labeled as their own app identifier regardless of intimacy
 distance. Relationship identifiers such as `:DING` (message heraldry) `:M3M` (3milmo, or third millennium
 money) and `:GAB` (codified gossip) appear at all intimacy distances: endod-endod (`:DB` at the base
-level, endod-exod (`:TTTT` at base level), exod-exod (`:DARK`), or exod-xenod (`:DARK`) pairings. These
+level, endod-exod (`:IP6` at base level), exod-exod (`:DARK`), or exod-xenod (`:DARK`) pairings. These
 classes of node pairing each carry a different set of attributes appropriate to the role of an intramural,
 border, or dark link. It is the responsibility of the query author to keep in mind which variant of link
 exists at each intimacy distance. The database uses distinct variants of relationship label at the TTTT
@@ -61,16 +71,16 @@ exists at each intimacy distance. The database uses distinct variants of relatio
 we emphasize these three distinct intimacy distances with technically unneccessary, but cognitively useful
 distinct relationship labels. For supra-TTTT application layers we dispense with distance-emphasizing link
 labels and instead rely on our understanding that, for example, an exod-exod link is always dark, and an
-endod-exod link is always crosses the border. Remember, each intimacy distance has a different set of state
-attributes appropriate to that distance, despite having the same relationship label for protocols above the
-TTTT level.
+endod-exod link is always crosses the border. Remember, each intimacy distance has a different set of
+state attributes appropriate to that distance, despite having the same relationship label for protocols
+above the TTTT level.
 
-The optimal continuity lane from an enode to another enode is usually intramural, and can be rapidly queried.
-However sometimes there exists a better lane that crosses the border. The basic strategy is for the agent to
-query the graph database for a probably-optimal intramural solution and then occasionally try a promising
-looking or even a randomly selected cross-border attempt to keep the agency's endods in meaningful competition
-with exods. Each time a border-crossing lane is discovered to outperform an intramural lane, this is valuable
-knowledge to be recorded for future performance gains.
+The optimal continuity lane from an enode to another enode is usually intramural, and can be rapidly
+queried. However sometimes there exists a better lane that crosses the border. The basic strategy is for
+the agent to query the graph database for a probably-optimal intramural solution and then occasionally
+try a promising looking or even a randomly selected cross-border attempt to keep the agency's endods in
+meaningful competition with exods. Each time a border-crossing lane is discovered to outperform an
+intramural lane, this is valuable knowledge to be recorded for future performance gains.
 
 The following invariants must be satisfied by the agency's simplified graph model of the TTTT network:
 * An endod may be fully orphaned. Such a node cannot participate in dunbar operations of any kind.
@@ -266,8 +276,10 @@ CREATE  ( endo_a:Endod { pubkey :"AAA45678901234567890123456789012"
                         }
         )
 
-    // There is no limit to endod-to-endod intramural communications at the base TTTT layer.
-    // It all happens directly in the database, and requires no IP6 datagram traffic.
+    // TTTT traffic along endod-to-endod intramural dunbar links is basically free.
+    // Since it all happens in the local database without foreign IP6 communication,
+    // there is no need to account for traffic volume the way there is between nodes
+    // maintained by separate agents.
     , (endo_a) -[:DB]-> (endo_b) -[:DB]-> (endo_a)
     , (endo_b) -[:DB]-> (endo_c) -[:DB]-> (endo_b)
     , (endo_c) -[:DB]-> (endo_d) -[:DB]-> (endo_c)
@@ -277,19 +289,27 @@ CREATE  ( endo_a:Endod { pubkey :"AAA45678901234567890123456789012"
     , (endo_c) -[:DB]-> (endo_g) -[:DB]-> (endo_c)
     , (endo_g) -[:DB]-> (endo_h) -[:DB]-> (endo_g)
 
-    , (exo_j) -[:TTTT{cap:10,net:0}]-> (endo_a) -[:TTTT{cap:10,net:0}]-> (exo_j)
-    , (exo_k) -[:TTTT{cap:10,net:0}]-> (endo_a) -[:TTTT{cap:10,net:0}]-> (exo_k)
-    , (exo_k) -[:TTTT{cap:10,net:0}]-> (endo_b) -[:TTTT{cap:10,net:0}]-> (exo_k)
-    , (exo_m) -[:TTTT{cap:10,net:0}]-> (endo_b) -[:TTTT{cap:10,net:0}]-> (exo_m)
-    , (exo_m) -[:TTTT{cap:10,net:0}]-> (endo_c) -[:TTTT{cap:10,net:0}]-> (exo_m)
-    , (exo_n) -[:TTTT{cap:10,net:0}]-> (endo_c) -[:TTTT{cap:10,net:0}]-> (exo_n)
-    , (exo_n) -[:TTTT{cap:10,net:0}]-> (endo_h) -[:TTTT{cap:10,net:0}]-> (exo_n)
-    , (exo_p) -[:TTTT{cap:10,net:0}]-> (endo_h) -[:TTTT{cap:10,net:0}]-> (exo_p)
-    , (exo_p) -[:TTTT{cap:10,net:0}]-> (endo_g) -[:TTTT{cap:10,net:0}]-> (exo_p)
-    , (exo_q) -[:TTTT{cap:10,net:0}]-> (endo_e) -[:TTTT{cap:10,net:0}]-> (exo_q)
-    , (exo_q) -[:TTTT{cap:10,net:0}]-> (endo_d) -[:TTTT{cap:10,net:0}]-> (exo_q)
-    , (exo_r) -[:TTTT{cap:10,net:0}]-> (endo_e) -[:TTTT{cap:10,net:0}]-> (exo_r)
+    // TTTT traffic along outbound (endod-exod) and inbound (exod-endod) border
+    // dunbar links is mediated by IP6 datagrams carrying TTTT wads between separate
+    // agents. Such traffic is metered, and expected to be roughly reciprocal.
+    // Such nodes use `cap` and `net` accounting properties to keep things in balatnce.
+    , (exo_j) -[:IP6{cap:10,net:0}]-> (endo_a) -[:IP6{cap:10,net:0}]-> (exo_j)
+    , (exo_k) -[:IP6{cap:10,net:0}]-> (endo_a) -[:IP6{cap:10,net:0}]-> (exo_k)
+    , (exo_k) -[:IP6{cap:10,net:0}]-> (endo_b) -[:IP6{cap:10,net:0}]-> (exo_k)
+    , (exo_m) -[:IP6{cap:10,net:0}]-> (endo_b) -[:IP6{cap:10,net:0}]-> (exo_m)
+    , (exo_m) -[:IP6{cap:10,net:0}]-> (endo_c) -[:IP6{cap:10,net:0}]-> (exo_m)
+    , (exo_n) -[:IP6{cap:10,net:0}]-> (endo_c) -[:IP6{cap:10,net:0}]-> (exo_n)
+    , (exo_n) -[:IP6{cap:10,net:0}]-> (endo_h) -[:IP6{cap:10,net:0}]-> (exo_n)
+    , (exo_p) -[:IP6{cap:10,net:0}]-> (endo_h) -[:IP6{cap:10,net:0}]-> (exo_p)
+    , (exo_p) -[:IP6{cap:10,net:0}]-> (endo_g) -[:IP6{cap:10,net:0}]-> (exo_p)
+    , (exo_q) -[:IP6{cap:10,net:0}]-> (endo_e) -[:IP6{cap:10,net:0}]-> (exo_q)
+    , (exo_q) -[:IP6{cap:10,net:0}]-> (endo_d) -[:IP6{cap:10,net:0}]-> (exo_q)
+    , (exo_r) -[:IP6{cap:10,net:0}]-> (endo_e) -[:IP6{cap:10,net:0}]-> (exo_r)
 
+    // Foreign nodes communicate with one another beyond the visibility horizon by
+    // any lanes they find to get the job done. Such dark lanes may be short or long
+    // but if they work well they get a high rank (high ranking means high chance of
+    // success relative to other dark nodes).
     , (exo_j) -[:DARK{rank:100}]-> (exo_k) -[:DARK{rank:130}]-> (exo_j)
     , (exo_k) -[:DARK{rank:200}]-> (exo_m) -[:DARK{rank:230}]-> (exo_k)
     , (exo_m) -[:DARK{rank:300}]-> (exo_n) -[:DARK{rank:330}]-> (exo_m)
@@ -297,6 +317,8 @@ CREATE  ( endo_a:Endod { pubkey :"AAA45678901234567890123456789012"
     , (exo_q) -[:DARK{rank:600}]-> (exo_r) -[:DARK{rank:630}]-> (exo_q)
     , (exo_r) -[:DARK{rank:700}]-> (exo_j) -[:DARK{rank:730}]-> (exo_r)
 
+    // Xonods are accessible via exods. Whenever xenod accessibility is discovered it is
+    // recorded in the local graph. A high ranking means a relatively productive lane.
     , (exo_j) -[:DARK{rank:2000}]-> (xeno_t)
     , (exo_k) -[:DARK{rank:3000}]-> (xeno_t)
     , (exo_k) -[:DARK{rank:4000}]-> (xeno_v)
