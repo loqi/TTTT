@@ -46,7 +46,7 @@ their standards and to their satisfaction, just as the upstream node has a simil
 me -- person to person. If it's a small harm, it can be handled algorithmically by adjusting database
 values and going about the day slightly differently as a result.
 
-This is whit gives a TTTT network its power. We don't normally attempt to discern the value and risk
+This is what gives a TTTT network its power. We don't normally attempt to discern the value and risk
 associated with each individual little packet of information flowing through the network. Instead we
 try our best to accurately evaluate and update the algorithmically quantified trustworthiness of the
 person behind the nodes directly connected to our nodes ("dunbar" nodes or the dunbar people controlling
