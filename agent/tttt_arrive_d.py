@@ -8,6 +8,34 @@ import socket
 import sys
 # import socketserver
 
+"""
+Run as a daemon
+Open stamp.db to associate a jot to a tunnel
+    stamp8 : tunn_id
+Open table: tunnel.db
+    tunnel_id : from_id, to_id, tunnkey
+
+Open table: injot.db - due_at 
+
+Listen for incoming wads via many sockets
+    When a wad comes in,
+    strip off stamp, seal, and wad
+    Look in stamp.db for wax[0..7]: tunn_id
+        loop to read all consecutive increments, where tunn_id=0 is skipped
+    query tunnel.db to get all (usually just one) tunnel records
+    seal = wax[8..15]
+    find a key that decrypts wad and matches seal
+    if so, parse the wad into binjots
+    perform basic sanity checks and write binjots to injot.db
+    remove stamp from stamp.db by:
+        zero it out.
+        scan forward along stamps until reaching blank or non-zeroed stamp
+        if it terminated by a null one, then delete all the ending zeroed stamps going backward.
+    repeat
+"""
+
+
+
 def log(msg):
     print(msg, file=sys.stderr)
 
@@ -33,7 +61,7 @@ except socket.error as err:
 
 while True:
     log('\nWaiting to receive UDP datagram...')
-    data, addr = sock.recvfrom(4096)    
+    data, addr = sock.recvfrom(1280)
     log(f'Received {len(data)} bytes from {addr}\n{data}\n')
     if data:
         log(f'Sending {len(data)} bytes back to {addr}')
