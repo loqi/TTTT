@@ -140,56 +140,56 @@ xenode.db       -- A stranger node, not directly linked to an enode, inferred th
 ---- Cypher for Neo4j development sample graph reset all data and create graph
 ```cypher
 MATCH (n) DETACH DELETE n;
-CREATE  ( endo_a:Endod { pubkey :"AAA45678901234567890123456789012"
+CREATE  ( endo_a:Endod  { pubkey :"AAA45678901234567890123456789012"
                         , kSECRET:"a__45678901234567890123456789012" 
                         , stublen:1
                         , stub_og:1
                         , user_id:1
                         }
         )
-    ,   ( endo_b:Endod { pubkey :"BBB45678901234567890123456789012"
+    ,   ( endo_b:Endod  { pubkey :"BBB45678901234567890123456789012"
                         , kSECRET:"b__45678901234567890123456789012"
                         , stublen:1
                         , stub_og:1
                         , user_id:1
                         }
         )
-    ,   ( endo_c:Endod { pubkey :"CCC45678901234567890123456789012"
+    ,   ( endo_c:Endod  { pubkey :"CCC45678901234567890123456789012"
                         , kSECRET:"c__45678901234567890123456789012"
                         , stublen:1
                         , stub_og:1
                         , user_id:1
                         }
         )
-    ,   ( endo_d:Endod { pubkey :"DDD45678901234567890123456789012"
+    ,   ( endo_d:Endod  { pubkey :"DDD45678901234567890123456789012"
                         , kSECRET:"d__45678901234567890123456789012"
                         , stublen:1
                         , stub_og:1
                         , user_id:1
                         }
         )
-    ,   ( endo_e:Endod { pubkey :"EEE45678901234567890123456789012"
+    ,   ( endo_e:Endod  { pubkey :"EEE45678901234567890123456789012"
                         , kSECRET:"e__45678901234567890123456789012"
                         , stublen:1
                         , stub_og:1
                         , user_id:1
                         }
         )
-    ,   ( endo_f:Endod { pubkey :"FFF45678901234567890123456789012"
+    ,   ( endo_f:Endod  { pubkey :"FFF45678901234567890123456789012"
                         , kSECRET:"f__45678901234567890123456789012"
                         , stublen:1
                         , stub_og:1
                         , user_id:1
                         }
         )
-    ,   ( endo_g:Endod { pubkey :"GGG45678901234567890123456789012"
+    ,   ( endo_g:Endod  { pubkey :"GGG45678901234567890123456789012"
                         , kSECRET:"g__45678901234567890123456789012"
                         , stublen:1
                         , stub_og:1
                         , user_id:1
                         }
         )
-    ,   ( endo_h:Endod { pubkey :"HHH45678901234567890123456789012"
+    ,   ( endo_h:Endod  { pubkey :"HHH45678901234567890123456789012"
                         , kSECRET:"h__45678901234567890123456789012"
                         , stublen:1
                         , stub_og:1
@@ -198,70 +198,70 @@ CREATE  ( endo_a:Endod { pubkey :"AAA45678901234567890123456789012"
         )
     
     
-    ,   ( exo_j:Exod   { pubkey      :"JJJ45678901234567890123456789012"
+    ,   ( exo_j:Exod    { pubkey      :"JJJ45678901234567890123456789012"
                         , stublen    :1
                         , stub_og    :1
                         , ip6_pool_id:1
                         }
         )
-    ,   ( exo_k:Exod   { pubkey      :"KKK45678901234567890123456789012"
+    ,   ( exo_k:Exod    { pubkey      :"KKK45678901234567890123456789012"
                         , stublen    :1
                         , stub_og    :1
                         , ip6_pool_id:2
                         }
         )
-    ,   ( exo_m:Exod   { pubkey      :"MMM45678901234567890123456789012"
+    ,   ( exo_m:Exod    { pubkey      :"MMM45678901234567890123456789012"
                         , stublen    :1
                         , stub_og    :1
                         , ip6_pool_id:3
                         }
         )
-    ,   ( exo_n:Exod   { pubkey      :"NNN45678901234567890123456789012"
+    ,   ( exo_n:Exod    { pubkey      :"NNN45678901234567890123456789012"
                         , stublen    :1
                         , stub_og    :1
                         , ip6_pool_id:4
-                     }
+                        }
         )
-    ,   ( exo_p:Exod   { pubkey      :"PPP45678901234567890123456789012"
+    ,   ( exo_p:Exod    { pubkey      :"PPP45678901234567890123456789012"
                         , stublen    :1
                         , stub_og    :1
                         , ip6_pool_id:5
                         }
         )
-    ,   ( exo_q:Exod   { pubkey      :"QQQ45678901234567890123456789012"
+    ,   ( exo_q:Exod    { pubkey      :"QQQ45678901234567890123456789012"
                         , stublen    :1
                         , stub_og    :1
                         , ip6_pool_id:6
                         }
         )
-    ,   ( exo_r:Exod   { pubkey      :"RRR45678901234567890123456789012"
+    ,   ( exo_r:Exod    { pubkey      :"RRR45678901234567890123456789012"
                         , stublen    :1
                         , stub_og    :1
                         , ip6_pool_id:7
                         }
         )
-    ,   ( xeno_t:Xenod { pubkey     :"TTT45678901234567890123456789012"
-                     , stublen    :1
+    ,   ( xeno_t:Xenod  { pubkey     :"TTT45678901234567890123456789012"
+                        , stublen    :1
                         , stub_og    :1
                         , ip6_addr_id:1
                         // , score__prot:{ tttt:381 , m3m:460 , ding:230 }
                         }
         )
-    ,   ( xeno_v:Xenod { pubkey     :"VVV45678901234567890123456789012"
+    ,   ( xeno_v:Xenod  { pubkey     :"VVV45678901234567890123456789012"
                         , stublen    :1
                         , stub_og    :1
                         , ip6_addr_id:2
                         // , score__prot:{ tttt:381 , m3m:460 , ding:230 }
                         }
         )
-    ,   ( xeno_w:Xenod { pubkey     :"WWW45678901234567890123456789012"
+    ,   ( xeno_w:Xenod  { pubkey     :"WWW45678901234567890123456789012"
                         , stublen    :1
                         , stub_og    :1
                         , ip6_addr_id:3
                         // , score__prot:{ tttt:381 , m3m:460 , ding:230 }
                         }
         )
-    ,   ( xeno_x:Xenod { pubkey     :"XXX45678901234567890123456789012"
+    ,   ( xeno_x:Xenod  { pubkey     :"XXX45678901234567890123456789012"
                         , stublen    :1
                         , stub_og    :1
                         , ip6_addr_id:4

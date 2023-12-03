@@ -14,7 +14,7 @@
 #       - 30..40    b d e f h j m r t u y
 #
 #   Latin characters that might be mistaken for one of these 41 characters are
-#   are interpreted as synonym characters for a canonical scrib41 pseudo-digit:
+#   interpreted as synonym characters for a canonical scrib41 pseudo-digit:
 #       0 1 2 3 4 5 6 7 8 9 A 8 C D E F 6 H 1 J K L M N 0 P Q R 5 T U
 #       V W X 4 2 a b C d e f 9 h 1 j K 1 m h 0 P 9 r 5 t u V W X y 2
 #
