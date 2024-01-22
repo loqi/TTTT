@@ -21,9 +21,9 @@ more general form 'agent' is preferred when not making a point about many users.
 
 An agency maintains a simplified model of the global TTTT graph with three flavors of node:
 
-* a **xenod** (xeno-node) is a foreign node without direct TTTT link to an endod
-* an **exod** (exo-node) is a foreign node with a direct TTTT link to an endod
-* an **endod** (endo-node) is a node formally represented by this agency
+* a **xenode** (xeno-node) is a foreign node without direct TTTT link to an endode
+* an **exode** (exo-node) is a foreign node with a direct TTTT link to an endode
+* an **endode** (endo-node) is a node formally represented by this agency
 * **Synods** (syno-nodes) are a nodes of this agency owned by one user
 
 Any agency is responsible for keeping the "source of truth" of all endods it serves, of
