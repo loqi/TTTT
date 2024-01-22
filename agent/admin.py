@@ -30,3 +30,41 @@ def new_user_record():
 
 def user_owns_node(user, node):
     pass
+
+
+
+
+
+"""
+
+
+synode, endode, exode, dunbar, xenode
+
+boss - a hub 
+user - 
+client -
+hub - the set of synods controlled by a user
+ambit - the set of synods and dunbars controlled by a user
+
+webapp - 
+    admin: create a new hub with one user and one starter synode (pseudonymous persona)
+    login as a user
+    logout as a user
+    register a panic to bump off all users and delay
+    create a new synode within the hub
+    perform a TRIE query
+    perform a SEEK on an addr or card
+    perform a PING with an implied SEEK
+    perform a WEND with an implied PING, modifying lane as it goes
+    perform a 3milmo/GIVE with an implied WEND
+    
+
+
+Structure:
+agent
+    TTTT boss HTTP UI
+    TTTT in via IP6 UDP
+    TTTT out via IP6 UDP
+
+
+"""
